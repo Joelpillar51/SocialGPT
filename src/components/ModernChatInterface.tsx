@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -90,8 +91,8 @@ What strategies has your organization implemented for remote productivity?`;
 
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-gray-800">
-      {/* Header with sidebar trigger and upgrade button */}
-      <div className="p-3 md:p-4 border-b border-gray-700">
+      {/* Header with sidebar trigger and upgrade button - Now Sticky */}
+      <div className="sticky top-0 z-20 p-3 md:p-4 border-b border-gray-700 bg-gray-800/95 backdrop-blur-sm">
         <div className="flex justify-between items-center w-full">
           <SidebarTrigger className="text-white hover:bg-gray-700 h-8 w-8 md:h-10 md:w-10" />
           <div className="flex items-center space-x-2 ml-auto">
