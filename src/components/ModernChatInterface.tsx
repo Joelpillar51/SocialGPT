@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Send, Copy, Check, Sparkles, Zap, Target } from 'lucide-react';
+import { Send, Activity, Zap, AlertTriangle } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -15,7 +15,6 @@ export const ModernChatInterface = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,16 +78,6 @@ Key insights:
 What strategies has your organization implemented for remote productivity?`;
   };
 
-  const handleCopy = async (content: string, messageId: string) => {
-    try {
-      await navigator.clipboard.writeText(content);
-      setCopiedId(messageId);
-      setTimeout(() => setCopiedId(null), 2000);
-    } catch (err) {
-      console.error('Failed to copy text: ', err);
-    }
-  };
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -97,92 +86,101 @@ What strategies has your organization implemented for remote productivity?`;
   };
 
   return (
-    <div className="flex-1 flex flex-col min-h-0">
-      {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto px-3 md:px-6 py-4 md:py-8">
+    <div className="flex-1 flex flex-col min-h-screen bg-gray-800">
+      {/* Main Content Area */}
+      <div className="flex-1 overflow-y-auto">
         {messages.length === 0 ? (
-          <div className="text-center py-8 md:py-16 max-w-2xl mx-auto">
-            <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-xl">
-              <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-white" />
-            </div>
-            <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3 md:mb-4">
-              GetXPilot
+          <div className="text-center py-20 max-w-3xl mx-auto px-6">
+            <h1 className="text-4xl font-light text-white mb-12">
+              ChatGPT
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-6 md:mb-8 leading-relaxed px-2">
-              Generate engaging Twitter threads and LinkedIn posts that sound natural and human. 
-              Just describe what you want to say, and I'll create platform-optimized content.
-            </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mt-8 md:mt-12">
-              <div className="bg-white dark:bg-gray-800 p-4 md:p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-200">
-                <Zap className="w-6 h-6 md:w-8 md:h-8 text-blue-500 mb-2 md:mb-3" />
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-1 md:mb-2 text-sm md:text-base">Lightning Fast</h3>
-                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">Generate content in seconds with AI-powered optimization</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Activity className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-medium text-white mb-2">Examples</h3>
+                <div className="space-y-3">
+                  <div className="bg-gray-700 hover:bg-gray-600 rounded-lg p-3 text-sm text-gray-300 cursor-pointer transition-colors">
+                    "Explain quantum computing in simple terms"
+                  </div>
+                  <div className="bg-gray-700 hover:bg-gray-600 rounded-lg p-3 text-sm text-gray-300 cursor-pointer transition-colors">
+                    "Got any creative ideas for a 10 year old's birthday?"
+                  </div>
+                  <div className="bg-gray-700 hover:bg-gray-600 rounded-lg p-3 text-sm text-gray-300 cursor-pointer transition-colors">
+                    "How do I make an HTTP request in Javascript?"
+                  </div>
+                </div>
               </div>
-              <div className="bg-white dark:bg-gray-800 p-4 md:p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-200">
-                <Target className="w-6 h-6 md:w-8 md:h-8 text-purple-500 mb-2 md:mb-3" />
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-1 md:mb-2 text-sm md:text-base">Platform Optimized</h3>
-                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">Perfect formatting for Twitter threads and LinkedIn posts</p>
+
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Zap className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-medium text-white mb-2">Capabilities</h3>
+                <div className="space-y-3">
+                  <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
+                    Remembers what user said earlier in the conversation
+                  </div>
+                  <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
+                    Allows user to provide follow-up corrections
+                  </div>
+                  <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
+                    Trained to decline inappropriate requests
+                  </div>
+                </div>
               </div>
-              <div className="bg-white dark:bg-gray-800 p-4 md:p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-200">
-                <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-green-500 mb-2 md:mb-3" />
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-1 md:mb-2 text-sm md:text-base">Human-Like</h3>
-                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">No AI buzzwords or robotic language</p>
+
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <AlertTriangle className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-medium text-white mb-2">Limitations</h3>
+                <div className="space-y-3">
+                  <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
+                    May occasionally generate incorrect information
+                  </div>
+                  <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
+                    May occasionally produce harmful instructions or biased content
+                  </div>
+                  <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
+                    Limited knowledge of world and events after 2021
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className="space-y-6 md:space-y-8 max-w-4xl mx-auto">
+          <div className="space-y-8 max-w-3xl mx-auto px-6 py-8">
             {messages.map((message) => (
               <div
                 key={message.id}
                 className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[85%] md:max-w-3xl px-4 md:px-6 py-3 md:py-4 rounded-2xl shadow-sm ${
+                  className={`max-w-[80%] px-6 py-4 rounded-2xl ${
                     message.isUser
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white ml-4 md:ml-12'
-                      : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 mr-4 md:mr-12'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-700 text-gray-100'
                   }`}
                 >
-                  <div className="whitespace-pre-wrap leading-relaxed text-sm md:text-base">
+                  <div className="whitespace-pre-wrap leading-relaxed text-sm">
                     {message.content}
                   </div>
-                  {!message.isUser && (
-                    <div className="flex justify-end mt-3 md:mt-4">
-                      <Button
-                        onClick={() => handleCopy(message.content, message.id)}
-                        variant="ghost"
-                        size="sm"
-                        className="h-7 md:h-8 px-2 md:px-3 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors text-xs md:text-sm"
-                      >
-                        {copiedId === message.id ? (
-                          <>
-                            <Check className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                            Copied!
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                            Copy
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  )}
                 </div>
               </div>
             ))}
             {isGenerating && (
               <div className="flex justify-start">
-                <div className="max-w-[85%] md:max-w-3xl px-4 md:px-6 py-3 md:py-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 mr-4 md:mr-12">
-                  <div className="flex items-center space-x-2 md:space-x-3">
+                <div className="max-w-[80%] px-6 py-4 rounded-2xl bg-gray-700">
+                  <div className="flex items-center space-x-3">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
-                    <span className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Creating your content...</span>
+                    <span className="text-gray-400 text-sm">Thinking...</span>
                   </div>
                 </div>
               </div>
@@ -191,30 +189,25 @@ What strategies has your organization implemented for remote productivity?`;
         )}
       </div>
 
-      {/* Sticky Input Area */}
-      <div className="sticky bottom-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700 p-3 md:p-6">
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
+      {/* Input Area */}
+      <div className="border-t border-gray-700 bg-gray-800 p-6">
+        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
           <div className="relative">
             <Textarea
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Describe the content you want to create... (e.g., 'Twitter thread about AI productivity tools for developers')"
-              className="min-h-[60px] md:min-h-[80px] max-h-[150px] md:max-h-[200px] resize-none pr-12 md:pr-16 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-blue-500 dark:focus:ring-blue-400 rounded-xl shadow-sm text-sm md:text-base"
+              placeholder="Send a message"
+              className="min-h-[50px] max-h-[200px] resize-none pr-12 bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-gray-500 focus:ring-gray-500 rounded-xl"
               disabled={isGenerating}
             />
             <Button
               type="submit"
               disabled={!inputValue.trim() || isGenerating}
-              className="absolute bottom-2 md:bottom-3 right-2 md:right-3 h-8 w-8 md:h-10 md:w-10 p-0 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg"
+              className="absolute bottom-2 right-2 h-8 w-8 p-0 bg-gray-600 hover:bg-gray-500 rounded-lg"
             >
-              <Send className="w-4 h-4 md:w-5 md:h-5" />
+              <Send className="w-4 h-4" />
             </Button>
-          </div>
-          <div className="flex items-center justify-center mt-2 md:mt-3">
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              Press Enter to send • Shift+Enter for new line
-            </p>
           </div>
         </form>
       </div>
