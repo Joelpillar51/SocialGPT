@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Plus, MessageSquare, Search, Users } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface ChatHistory {
   id: string;
@@ -49,8 +50,8 @@ export const ModernSidebar = () => {
   const categories = ['Today', 'Yesterday', 'Previous 7 days', 'Previous 30 days'];
 
   return (
-    <Sidebar className="border-none bg-gray-900 text-white" side="left" variant="sidebar" collapsible="none">
-      <SidebarHeader className="p-4">
+    <Sidebar className="border-none bg-gray-900 text-white h-screen" side="left" variant="sidebar" collapsible="none">
+      <SidebarHeader className="p-4 flex-shrink-0">
         <div className="flex items-center space-x-3 mb-4">
           <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
             <Users className="w-5 h-5 text-white" />
@@ -73,33 +74,35 @@ export const ModernSidebar = () => {
         </Button>
       </SidebarHeader>
 
-      <SidebarContent className="px-2">
-        <SidebarMenu>
-          {categories.map((category) => (
-            <div key={category} className="mb-4">
-              {groupedChats[category] && (
-                <>
-                  <h3 className="px-3 py-2 text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    {category}
-                  </h3>
-                  {groupedChats[category].map((chat) => (
-                    <SidebarMenuItem key={chat.id}>
-                      <SidebarMenuButton className="w-full p-3 text-left hover:bg-gray-800 rounded-lg text-sm text-gray-300 hover:text-white transition-colors group">
-                        <div className="flex items-center space-x-3 w-full">
-                          <MessageSquare className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                          <span className="truncate">{chat.title}</span>
-                        </div>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </>
-              )}
-            </div>
-          ))}
-        </SidebarMenu>
+      <SidebarContent className="flex-1 min-h-0">
+        <ScrollArea className="h-full px-2">
+          <SidebarMenu>
+            {categories.map((category) => (
+              <div key={category} className="mb-4">
+                {groupedChats[category] && (
+                  <>
+                    <h3 className="px-3 py-2 text-xs font-medium text-gray-400 uppercase tracking-wider">
+                      {category}
+                    </h3>
+                    {groupedChats[category].map((chat) => (
+                      <SidebarMenuItem key={chat.id}>
+                        <SidebarMenuButton className="w-full p-3 text-left hover:bg-gray-800 rounded-lg text-sm text-gray-300 hover:text-white transition-colors group">
+                          <div className="flex items-center space-x-3 w-full">
+                            <MessageSquare className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                            <span className="truncate">{chat.title}</span>
+                          </div>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
+                  </>
+                )}
+              </div>
+            ))}
+          </SidebarMenu>
+        </ScrollArea>
       </SidebarContent>
 
-      <SidebarFooter className="p-4">
+      <SidebarFooter className="p-4 flex-shrink-0">
         <div className="flex items-center space-x-3 text-gray-400">
           <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
           <div className="w-6 h-6 bg-gray-600 rounded-full"></div>

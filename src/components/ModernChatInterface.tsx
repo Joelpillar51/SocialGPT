@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Send, Activity, Twitter, Users, AlertTriangle } from 'lucide-react';
+import { Send, Activity, Twitter, Users, AlertTriangle, Crown } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -87,6 +87,16 @@ What strategies has your organization implemented for remote productivity?`;
 
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-gray-800">
+      {/* Upgrade Button at the top */}
+      <div className="p-4 border-b border-gray-700">
+        <div className="max-w-3xl mx-auto flex justify-end">
+          <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6">
+            <Crown className="w-4 h-4 mr-2" />
+            Upgrade to Pro
+          </Button>
+        </div>
+      </div>
+
       {/* Main Content Area */}
       <div className="flex-1 overflow-y-auto pb-32">
         {messages.length === 0 ? (
@@ -189,8 +199,8 @@ What strategies has your organization implemented for remote productivity?`;
         )}
       </div>
 
-      {/* Sticky Input Area */}
-      <div className="fixed bottom-0 left-0 right-0 border-t border-gray-700 bg-gray-800 p-6 z-10">
+      {/* Sticky Input Area - Removed background */}
+      <div className="fixed bottom-0 left-0 right-0 p-6 z-10">
         <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
           <div className="relative">
             <Textarea
