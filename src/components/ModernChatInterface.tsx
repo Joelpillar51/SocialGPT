@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { usePromptLimits } from '@/hooks/usePromptLimits';
 import { PromptUsageDisplay } from '@/components/PromptUsageDisplay';
-
 interface Message {
   id: string;
   content: string;
@@ -18,32 +17,37 @@ interface Message {
   liked?: boolean;
   disliked?: boolean;
 }
-
 export const ModernChatInterface = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [userPlan] = useState<'free' | 'pro'>('free'); // This would come from your auth/user context
-  const { state } = useSidebar();
-  const { toast } = useToast();
-  
-  // Add prompt limits hook
-  const { canSubmit, incrementUsage, getUsageText, getRemainingPrompts } = usePromptLimits(userPlan);
+  const {
+    state
+  } = useSidebar();
+  const {
+    toast
+  } = useToast();
 
+  // Add prompt limits hook
+  const {
+    canSubmit,
+    incrementUsage,
+    getUsageText,
+    getRemainingPrompts
+  } = usePromptLimits(userPlan);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim() || isGenerating || !canSubmit) return;
 
     // Increment usage count for free users
     incrementUsage();
-
     const userMessage: Message = {
       id: Date.now().toString(),
       content: inputValue,
       isUser: true,
-      timestamp: new Date(),
+      timestamp: new Date()
     };
-
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
     setIsGenerating(true);
@@ -51,20 +55,17 @@ export const ModernChatInterface = () => {
     // Simulate AI response
     try {
       await new Promise(resolve => setTimeout(resolve, 2500));
-      
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
         content: generateMockResponse(inputValue),
         isUser: false,
-        timestamp: new Date(),
+        timestamp: new Date()
       };
-
       setMessages(prev => [...prev, aiResponse]);
     } finally {
       setIsGenerating(false);
     }
   };
-
   const generateMockResponse = (input: string) => {
     return `Here's engaging content based on your request: "${input}"
 
@@ -94,36 +95,32 @@ Key insights:
 
 What strategies has your organization implemented for remote productivity?`;
   };
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSubmit(e as any);
     }
   };
-
   const handleLogout = () => {
     // Add your logout logic here
     console.log('User logged out');
   };
-
   const handleCopy = async (content: string) => {
     try {
       await navigator.clipboard.writeText(content);
       toast({
         title: "Copied!",
-        description: "Content copied to clipboard",
+        description: "Content copied to clipboard"
       });
     } catch (err) {
       console.error('Failed to copy text: ', err);
       toast({
         title: "Copy failed",
         description: "Failed to copy content to clipboard",
-        variant: "destructive",
+        variant: "destructive"
       });
     }
   };
-
   const handleLike = (messageId: string) => {
     setMessages(prev => prev.map(msg => {
       if (msg.id === messageId) {
@@ -135,13 +132,11 @@ What strategies has your organization implemented for remote productivity?`;
       }
       return msg;
     }));
-    
     toast({
       title: "Feedback recorded",
-      description: "Thank you for your feedback!",
+      description: "Thank you for your feedback!"
     });
   };
-
   const handleDislike = (messageId: string) => {
     setMessages(prev => prev.map(msg => {
       if (msg.id === messageId) {
@@ -153,13 +148,11 @@ What strategies has your organization implemented for remote productivity?`;
       }
       return msg;
     }));
-    
     toast({
       title: "Feedback recorded",
-      description: "We'll work on improving our responses.",
+      description: "We'll work on improving our responses."
     });
   };
-
   const handleRegenerate = async (messageId: string) => {
     const messageIndex = messages.findIndex(msg => msg.id === messageId);
     if (messageIndex === -1) return;
@@ -167,34 +160,25 @@ What strategies has your organization implemented for remote productivity?`;
     // Find the user message that prompted this AI response
     const userMessage = messages[messageIndex - 1];
     if (!userMessage || userMessage.isUser === false) return;
-
     setIsGenerating(true);
-    
     try {
       await new Promise(resolve => setTimeout(resolve, 2500));
-      
       const regeneratedResponse: Message = {
         id: Date.now().toString(),
         content: generateMockResponse(userMessage.content),
         isUser: false,
-        timestamp: new Date(),
+        timestamp: new Date()
       };
-
-      setMessages(prev => prev.map(msg => 
-        msg.id === messageId ? regeneratedResponse : msg
-      ));
-      
+      setMessages(prev => prev.map(msg => msg.id === messageId ? regeneratedResponse : msg));
       toast({
         title: "Content regenerated",
-        description: "New response generated successfully!",
+        description: "New response generated successfully!"
       });
     } finally {
       setIsGenerating(false);
     }
   };
-
-  return (
-    <div className="flex-1 flex flex-col min-h-screen bg-gray-800">
+  return <div className="flex-1 flex flex-col min-h-screen bg-gray-800">
       {/* Header with sidebar trigger and upgrade button - Now Sticky */}
       <div className="sticky top-0 z-20 p-3 md:p-4 border-b border-gray-700 bg-gray-800/95 backdrop-blur-sm">
         <div className="flex justify-between items-center w-full">
@@ -227,22 +211,15 @@ What strategies has your organization implemented for remote productivity?`;
                   <div className="flex items-center justify-between w-full">
                     <span>Plan:</span>
                     <div className="flex items-center space-x-1">
-                      {userPlan === 'pro' ? (
-                        <>
+                      {userPlan === 'pro' ? <>
                           <Crown className="w-4 h-4 text-yellow-500" />
                           <span className="text-yellow-500 font-medium">Pro</span>
-                        </>
-                      ) : (
-                        <span className="text-gray-400">Free</span>
-                      )}
+                        </> : <span className="text-gray-400">Free</span>}
                     </div>
                   </div>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-gray-700" />
-                <DropdownMenuItem 
-                  className="focus:bg-gray-800 focus:text-white cursor-pointer"
-                  onClick={handleLogout}
-                >
+                <DropdownMenuItem className="focus:bg-gray-800 focus:text-white cursor-pointer" onClick={handleLogout}>
                   <LogOut className="w-4 h-4 mr-2" />
                   <span>Logout</span>
                 </DropdownMenuItem>
@@ -254,8 +231,7 @@ What strategies has your organization implemented for remote productivity?`;
 
       {/* Main Content Area with proper bottom padding */}
       <div className="flex-1 overflow-y-auto pb-64 md:pb-72">
-        {messages.length === 0 ? (
-          <div className="text-center py-8 md:py-20 max-w-3xl mx-auto px-4 md:px-6">
+        {messages.length === 0 ? <div className="text-center py-8 md:py-20 max-w-3xl mx-auto px-4 md:px-6">
             <h1 className="text-2xl md:text-4xl font-light text-white mb-6 md:mb-12">
               SocialGPT
             </h1>
@@ -315,130 +291,66 @@ What strategies has your organization implemented for remote productivity?`;
                 </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="space-y-4 md:space-y-8 max-w-3xl mx-auto px-4 md:px-6 py-4 md:py-8">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-[90%] md:max-w-[80%] ${message.isUser ? '' : 'group'}`}
-                >
-                  <div
-                    className={`px-3 md:px-6 py-2 md:py-4 rounded-2xl ${
-                      message.isUser
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-700 text-gray-100'
-                    }`}
-                  >
+          </div> : <div className="space-y-4 md:space-y-8 max-w-3xl mx-auto px-4 md:px-6 py-4 md:py-8">
+            {messages.map(message => <div key={message.id} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[90%] md:max-w-[80%] ${message.isUser ? '' : 'group'}`}>
+                  <div className={`px-3 md:px-6 py-2 md:py-4 rounded-2xl ${message.isUser ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-100'}`}>
                     <div className="whitespace-pre-wrap leading-relaxed text-xs md:text-sm">
                       {message.content}
                     </div>
                   </div>
                   
                   {/* Action buttons for AI messages */}
-                  {!message.isUser && (
-                    <div className="flex items-center space-x-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleCopy(message.content)}
-                        className="h-8 w-8 p-0 text-gray-400 hover:text-white hover:bg-gray-600"
-                      >
+                  {!message.isUser && <div className="flex items-center space-x-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <Button variant="ghost" size="sm" onClick={() => handleCopy(message.content)} className="h-8 w-8 p-0 text-gray-400 hover:text-white hover:bg-gray-600">
                         <Copy className="w-4 h-4" />
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleLike(message.id)}
-                        className={`h-8 w-8 p-0 hover:bg-gray-600 ${
-                          message.liked ? 'text-green-500' : 'text-gray-400 hover:text-white'
-                        }`}
-                      >
+                      <Button variant="ghost" size="sm" onClick={() => handleLike(message.id)} className={`h-8 w-8 p-0 hover:bg-gray-600 ${message.liked ? 'text-green-500' : 'text-gray-400 hover:text-white'}`}>
                         <ThumbsUp className="w-4 h-4" />
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDislike(message.id)}
-                        className={`h-8 w-8 p-0 hover:bg-gray-600 ${
-                          message.disliked ? 'text-red-500' : 'text-gray-400 hover:text-white'
-                        }`}
-                      >
+                      <Button variant="ghost" size="sm" onClick={() => handleDislike(message.id)} className={`h-8 w-8 p-0 hover:bg-gray-600 ${message.disliked ? 'text-red-500' : 'text-gray-400 hover:text-white'}`}>
                         <ThumbsDown className="w-4 h-4" />
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleRegenerate(message.id)}
-                        disabled={isGenerating}
-                        className="h-8 w-8 p-0 text-gray-400 hover:text-white hover:bg-gray-600 disabled:opacity-50"
-                      >
+                      <Button variant="ghost" size="sm" onClick={() => handleRegenerate(message.id)} disabled={isGenerating} className="h-8 w-8 p-0 text-gray-400 hover:text-white hover:bg-gray-600 disabled:opacity-50">
                         <RefreshCw className={`w-4 h-4 ${isGenerating ? 'animate-spin' : ''}`} />
                       </Button>
-                    </div>
-                  )}
+                    </div>}
                 </div>
-              </div>
-            ))}
-            {isGenerating && (
-              <div className="flex justify-start">
+              </div>)}
+            {isGenerating && <div className="flex justify-start">
                 <div className="max-w-[90%] md:max-w-[80%] px-3 md:px-6 py-2 md:py-4 rounded-2xl bg-gray-700">
                   <div className="flex items-center space-x-2 md:space-x-3">
                     <div className="flex space-x-1">
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{
+                  animationDelay: '0.1s'
+                }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{
+                  animationDelay: '0.2s'
+                }}></div>
                     </div>
                     <span className="text-gray-400 text-xs md:text-sm">Generating content...</span>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-        )}
+              </div>}
+          </div>}
       </div>
 
       {/* Enhanced Sticky Input Area - Responsive to sidebar state with reduced width */}
-      <div className={`fixed bottom-0 right-0 p-4 md:p-6 z-10 transition-all duration-200 ${
-        state === 'expanded' ? 'left-0 md:left-64' : 'left-0 md:left-12'
-      }`}>
+      <div className={`fixed bottom-0 right-0 p-4 md:p-6 z-10 transition-all duration-200 ${state === 'expanded' ? 'left-0 md:left-64' : 'left-0 md:left-12'}`}>
         <div className="max-w-3xl mx-auto">
           {/* Add prompt usage display */}
-          <PromptUsageDisplay
-            userPlan={userPlan}
-            usageText={getUsageText()}
-            remainingPrompts={getRemainingPrompts()}
-            canSubmit={canSubmit}
-          />
+          <PromptUsageDisplay userPlan={userPlan} usageText={getUsageText()} remainingPrompts={getRemainingPrompts()} canSubmit={canSubmit} />
           
           <form onSubmit={handleSubmit}>
-            <div className="relative flex items-end bg-gray-700 rounded-3xl border border-gray-600 shadow-2xl backdrop-blur-sm p-4 md:p-5">
-              <Textarea
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder={canSubmit 
-                  ? "Describe your content idea (e.g., 'LinkedIn post about AI in healthcare' or 'X thread about startup lessons')"
-                  : "Daily limit reached. Upgrade to Pro for unlimited prompts."
-                }
-                className="flex-1 min-h-[60px] md:min-h-[80px] max-h-[120px] md:max-h-[160px] resize-none border-0 bg-transparent text-white placeholder-gray-400 focus:ring-0 focus:outline-none p-0 text-base md:text-lg leading-relaxed"
-                disabled={isGenerating || !canSubmit}
-                rows={2}
-              />
-              <Button
-                type="submit"
-                disabled={!inputValue.trim() || isGenerating || !canSubmit}
-                className="ml-4 h-12 w-12 md:h-14 md:w-14 p-0 bg-blue-600 hover:bg-blue-500 rounded-2xl flex-shrink-0 shadow-lg transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
+            <div className="relative flex items-end bg-gray-700 rounded-3xl border border-gray-600 shadow-2xl backdrop-blur-sm p-4 md:p-5 px-[24px] mx-[24px] my-0 py-[12px]">
+              <Textarea value={inputValue} onChange={e => setInputValue(e.target.value)} onKeyDown={handleKeyDown} placeholder={canSubmit ? "Describe your content idea (e.g., 'LinkedIn post about AI in healthcare' or 'X thread about startup lessons')" : "Daily limit reached. Upgrade to Pro for unlimited prompts."} className="flex-1 min-h-[60px] md:min-h-[80px] max-h-[120px] md:max-h-[160px] resize-none border-0 bg-transparent text-white placeholder-gray-400 focus:ring-0 focus:outline-none p-0 text-base md:text-lg leading-relaxed" disabled={isGenerating || !canSubmit} rows={2} />
+              <Button type="submit" disabled={!inputValue.trim() || isGenerating || !canSubmit} className="ml-4 h-12 w-12 md:h-14 md:w-14 p-0 bg-blue-600 hover:bg-blue-500 rounded-2xl flex-shrink-0 shadow-lg transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
                 <Send className="w-5 h-5 md:w-6 md:h-6" />
               </Button>
             </div>
           </form>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
