@@ -7,6 +7,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Send, Activity, Twitter, Users, AlertTriangle, Crown, BookOpen, LogOut, User, Copy, ThumbsUp, ThumbsDown, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { usePromptLimits } from '@/hooks/usePromptLimits';
+import { PromptUsageDisplay } from '@/components/PromptUsageDisplay';
 
 interface Message {
   id: string;
@@ -24,10 +26,16 @@ export const ModernChatInterface = () => {
   const [userPlan] = useState<'free' | 'pro'>('free'); // This would come from your auth/user context
   const { state } = useSidebar();
   const { toast } = useToast();
+  
+  // Add prompt limits hook
+  const { canSubmit, incrementUsage, getUsageText, getRemainingPrompts } = usePromptLimits(userPlan);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputValue.trim() || isGenerating) return;
+    if (!inputValue.trim() || isGenerating || !canSubmit) return;
+
+    // Increment usage count for free users
+    incrementUsage();
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -398,21 +406,32 @@ What strategies has your organization implemented for remote productivity?`;
         state === 'expanded' ? 'left-0 md:left-64' : 'left-0 md:left-12'
       }`}>
         <div className="max-w-4xl mx-auto">
+          {/* Add prompt usage display */}
+          <PromptUsageDisplay
+            userPlan={userPlan}
+            usageText={getUsageText()}
+            remainingPrompts={getRemainingPrompts()}
+            canSubmit={canSubmit}
+          />
+          
           <form onSubmit={handleSubmit}>
             <div className="relative flex items-end bg-gray-700 rounded-3xl border border-gray-600 shadow-2xl backdrop-blur-sm p-4 md:p-5">
               <Textarea
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Describe your content idea (e.g., 'LinkedIn post about AI in healthcare' or 'X thread about startup lessons')"
+                placeholder={canSubmit 
+                  ? "Describe your content idea (e.g., 'LinkedIn post about AI in healthcare' or 'X thread about startup lessons')"
+                  : "Daily limit reached. Upgrade to Pro for unlimited prompts."
+                }
                 className="flex-1 min-h-[60px] md:min-h-[80px] max-h-[120px] md:max-h-[160px] resize-none border-0 bg-transparent text-white placeholder-gray-400 focus:ring-0 focus:outline-none p-0 text-base md:text-lg leading-relaxed"
-                disabled={isGenerating}
+                disabled={isGenerating || !canSubmit}
                 rows={2}
               />
               <Button
                 type="submit"
-                disabled={!inputValue.trim() || isGenerating}
-                className="ml-4 h-12 w-12 md:h-14 md:w-14 p-0 bg-blue-600 hover:bg-blue-500 rounded-2xl flex-shrink-0 shadow-lg transition-all duration-200 hover:scale-105"
+                disabled={!inputValue.trim() || isGenerating || !canSubmit}
+                className="ml-4 h-12 w-12 md:h-14 md:w-14 p-0 bg-blue-600 hover:bg-blue-500 rounded-2xl flex-shrink-0 shadow-lg transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Send className="w-5 h-5 md:w-6 md:h-6" />
               </Button>
