@@ -89,11 +89,11 @@ What strategies has your organization implemented for remote productivity?`;
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-gray-800">
       {/* Header with sidebar trigger and upgrade button */}
-      <div className="p-4 border-b border-gray-700">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <SidebarTrigger className="text-white hover:bg-gray-700 hidden md:flex" />
-          <Button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 md:px-6">
-            <Crown className="w-4 h-4 mr-2" />
+      <div className="p-3 md:p-4 border-b border-gray-700">
+        <div className="flex justify-between items-center w-full">
+          <SidebarTrigger className="text-white hover:bg-gray-700 h-8 w-8 md:h-10 md:w-10" />
+          <Button className="ml-auto bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 md:px-6 text-sm">
+            <Crown className="w-4 h-4 mr-1 md:mr-2" />
             <span className="hidden sm:inline">Upgrade to Pro</span>
             <span className="sm:hidden">Pro</span>
           </Button>
@@ -103,61 +103,61 @@ What strategies has your organization implemented for remote productivity?`;
       {/* Main Content Area */}
       <div className="flex-1 overflow-y-auto pb-32 md:pb-40">
         {messages.length === 0 ? (
-          <div className="text-center py-12 md:py-20 max-w-3xl mx-auto px-4 md:px-6">
-            <h1 className="text-3xl md:text-4xl font-light text-white mb-8 md:mb-12">
+          <div className="text-center py-8 md:py-20 max-w-3xl mx-auto px-4 md:px-6">
+            <h1 className="text-2xl md:text-4xl font-light text-white mb-6 md:mb-12">
               SocialGPT
             </h1>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12 md:mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-16">
               <div className="text-center">
-                <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Activity className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-700 rounded-lg flex items-center justify-center mx-auto mb-3 md:mb-4">
+                  <Activity className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
-                <h3 className="text-lg font-medium text-white mb-2">Examples</h3>
-                <div className="space-y-3">
-                  <div className="bg-gray-700 hover:bg-gray-600 rounded-lg p-3 text-sm text-gray-300 cursor-pointer transition-colors">
+                <h3 className="text-base md:text-lg font-medium text-white mb-2">Examples</h3>
+                <div className="space-y-2 md:space-y-3">
+                  <div className="bg-gray-700 hover:bg-gray-600 rounded-lg p-2 md:p-3 text-xs md:text-sm text-gray-300 cursor-pointer transition-colors">
                     "Create a thread about AI productivity tools for developers"
                   </div>
-                  <div className="bg-gray-700 hover:bg-gray-600 rounded-lg p-3 text-sm text-gray-300 cursor-pointer transition-colors">
+                  <div className="bg-gray-700 hover:bg-gray-600 rounded-lg p-2 md:p-3 text-xs md:text-sm text-gray-300 cursor-pointer transition-colors">
                     "LinkedIn post about remote work trends in 2024"
                   </div>
-                  <div className="bg-gray-700 hover:bg-gray-600 rounded-lg p-3 text-sm text-gray-300 cursor-pointer transition-colors">
+                  <div className="bg-gray-700 hover:bg-gray-600 rounded-lg p-2 md:p-3 text-xs md:text-sm text-gray-300 cursor-pointer transition-colors">
                     "Engaging X thread about startup fundraising tips"
                   </div>
                 </div>
               </div>
 
               <div className="text-center">
-                <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Twitter className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-700 rounded-lg flex items-center justify-center mx-auto mb-3 md:mb-4">
+                  <Twitter className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
-                <h3 className="text-lg font-medium text-white mb-2">Capabilities</h3>
-                <div className="space-y-3">
-                  <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
+                <h3 className="text-base md:text-lg font-medium text-white mb-2">Capabilities</h3>
+                <div className="space-y-2 md:space-y-3">
+                  <div className="bg-gray-700 rounded-lg p-2 md:p-3 text-xs md:text-sm text-gray-300">
                     Creates platform-optimized content for X and LinkedIn
                   </div>
-                  <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
+                  <div className="bg-gray-700 rounded-lg p-2 md:p-3 text-xs md:text-sm text-gray-300">
                     Generates engaging threads with proper character limits
                   </div>
-                  <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
+                  <div className="bg-gray-700 rounded-lg p-2 md:p-3 text-xs md:text-sm text-gray-300">
                     Tailors tone and style for professional or casual audiences
                   </div>
                 </div>
               </div>
 
               <div className="text-center">
-                <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <AlertTriangle className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-700 rounded-lg flex items-center justify-center mx-auto mb-3 md:mb-4">
+                  <AlertTriangle className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
-                <h3 className="text-lg font-medium text-white mb-2">Limitations</h3>
-                <div className="space-y-3">
-                  <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
+                <h3 className="text-base md:text-lg font-medium text-white mb-2">Limitations</h3>
+                <div className="space-y-2 md:space-y-3">
+                  <div className="bg-gray-700 rounded-lg p-2 md:p-3 text-xs md:text-sm text-gray-300">
                     Content should be reviewed for brand voice and compliance
                   </div>
-                  <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
+                  <div className="bg-gray-700 rounded-lg p-2 md:p-3 text-xs md:text-sm text-gray-300">
                     May need adjustment for specific industry terminology
                   </div>
-                  <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
+                  <div className="bg-gray-700 rounded-lg p-2 md:p-3 text-xs md:text-sm text-gray-300">
                     Always verify facts and statistics before posting
                   </div>
                 </div>
@@ -165,20 +165,20 @@ What strategies has your organization implemented for remote productivity?`;
             </div>
           </div>
         ) : (
-          <div className="space-y-6 md:space-y-8 max-w-3xl mx-auto px-4 md:px-6 py-6 md:py-8">
+          <div className="space-y-4 md:space-y-8 max-w-3xl mx-auto px-4 md:px-6 py-4 md:py-8">
             {messages.map((message) => (
               <div
                 key={message.id}
                 className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[85%] md:max-w-[80%] px-4 md:px-6 py-3 md:py-4 rounded-2xl ${
+                  className={`max-w-[90%] md:max-w-[80%] px-3 md:px-6 py-2 md:py-4 rounded-2xl ${
                     message.isUser
                       ? 'bg-blue-600 text-white'
                       : 'bg-gray-700 text-gray-100'
                   }`}
                 >
-                  <div className="whitespace-pre-wrap leading-relaxed text-sm">
+                  <div className="whitespace-pre-wrap leading-relaxed text-xs md:text-sm">
                     {message.content}
                   </div>
                 </div>
@@ -186,14 +186,14 @@ What strategies has your organization implemented for remote productivity?`;
             ))}
             {isGenerating && (
               <div className="flex justify-start">
-                <div className="max-w-[85%] md:max-w-[80%] px-4 md:px-6 py-3 md:py-4 rounded-2xl bg-gray-700">
-                  <div className="flex items-center space-x-3">
+                <div className="max-w-[90%] md:max-w-[80%] px-3 md:px-6 py-2 md:py-4 rounded-2xl bg-gray-700">
+                  <div className="flex items-center space-x-2 md:space-x-3">
                     <div className="flex space-x-1">
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
-                    <span className="text-gray-400 text-sm">Generating content...</span>
+                    <span className="text-gray-400 text-xs md:text-sm">Generating content...</span>
                   </div>
                 </div>
               </div>
