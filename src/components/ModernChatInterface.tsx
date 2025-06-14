@@ -4,7 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
-import { Send, Activity, Twitter, Users, AlertTriangle, Crown, BookOpen } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Send, Activity, Twitter, Users, AlertTriangle, Crown, BookOpen, LogOut, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface Message {
@@ -18,6 +19,7 @@ export const ModernChatInterface = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [userPlan] = useState<'free' | 'pro'>('free'); // This would come from your auth/user context
   const { state } = useSidebar();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -89,6 +91,11 @@ What strategies has your organization implemented for remote productivity?`;
     }
   };
 
+  const handleLogout = () => {
+    // Add your logout logic here
+    console.log('User logged out');
+  };
+
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-gray-800">
       {/* Header with sidebar trigger and upgrade button - Now Sticky */}
@@ -107,10 +114,43 @@ What strategies has your organization implemented for remote productivity?`;
               <span className="hidden sm:inline">Upgrade to Pro</span>
               <span className="sm:hidden">Pro</span>
             </Button>
-            <Avatar className="h-8 w-8 md:h-10 md:w-10">
-              <AvatarImage src="/placeholder.svg" alt="User" />
-              <AvatarFallback>U</AvatarFallback>
-            </Avatar>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="h-8 w-8 md:h-10 md:w-10 cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all">
+                  <AvatarImage src="/placeholder.svg" alt="User" />
+                  <AvatarFallback className="bg-gray-700 text-white">
+                    <User className="w-4 h-4" />
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 bg-gray-900 border-gray-700 text-white" align="end">
+                <DropdownMenuLabel className="text-gray-300">My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-gray-700" />
+                <DropdownMenuItem className="focus:bg-gray-800 focus:text-white cursor-default">
+                  <div className="flex items-center justify-between w-full">
+                    <span>Plan:</span>
+                    <div className="flex items-center space-x-1">
+                      {userPlan === 'pro' ? (
+                        <>
+                          <Crown className="w-4 h-4 text-yellow-500" />
+                          <span className="text-yellow-500 font-medium">Pro</span>
+                        </>
+                      ) : (
+                        <span className="text-gray-400">Free</span>
+                      )}
+                    </div>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-gray-700" />
+                <DropdownMenuItem 
+                  className="focus:bg-gray-800 focus:text-white cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  <span>Logout</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
