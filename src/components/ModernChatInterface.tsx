@@ -1,18 +1,20 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Send, Activity, Twitter, Users, AlertTriangle, Crown, BookOpen, LogOut, User } from 'lucide-react';
+import { Send, Activity, Twitter, Users, AlertTriangle, Crown, BookOpen, LogOut, User, Copy, ThumbsUp, ThumbsDown, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 interface Message {
   id: string;
   content: string;
   isUser: boolean;
   timestamp: Date;
+  liked?: boolean;
+  disliked?: boolean;
 }
 
 export const ModernChatInterface = () => {
@@ -21,6 +23,7 @@ export const ModernChatInterface = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [userPlan] = useState<'free' | 'pro'>('free'); // This would come from your auth/user context
   const { state } = useSidebar();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,6 +97,92 @@ What strategies has your organization implemented for remote productivity?`;
   const handleLogout = () => {
     // Add your logout logic here
     console.log('User logged out');
+  };
+
+  const handleCopy = async (content: string) => {
+    try {
+      await navigator.clipboard.writeText(content);
+      toast({
+        title: "Copied!",
+        description: "Content copied to clipboard",
+      });
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+      toast({
+        title: "Copy failed",
+        description: "Failed to copy content to clipboard",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleLike = (messageId: string) => {
+    setMessages(prev => prev.map(msg => {
+      if (msg.id === messageId) {
+        return {
+          ...msg,
+          liked: !msg.liked,
+          disliked: msg.liked ? msg.disliked : false
+        };
+      }
+      return msg;
+    }));
+    
+    toast({
+      title: "Feedback recorded",
+      description: "Thank you for your feedback!",
+    });
+  };
+
+  const handleDislike = (messageId: string) => {
+    setMessages(prev => prev.map(msg => {
+      if (msg.id === messageId) {
+        return {
+          ...msg,
+          disliked: !msg.disliked,
+          liked: msg.disliked ? msg.liked : false
+        };
+      }
+      return msg;
+    }));
+    
+    toast({
+      title: "Feedback recorded",
+      description: "We'll work on improving our responses.",
+    });
+  };
+
+  const handleRegenerate = async (messageId: string) => {
+    const messageIndex = messages.findIndex(msg => msg.id === messageId);
+    if (messageIndex === -1) return;
+
+    // Find the user message that prompted this AI response
+    const userMessage = messages[messageIndex - 1];
+    if (!userMessage || userMessage.isUser === false) return;
+
+    setIsGenerating(true);
+    
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2500));
+      
+      const regeneratedResponse: Message = {
+        id: Date.now().toString(),
+        content: generateMockResponse(userMessage.content),
+        isUser: false,
+        timestamp: new Date(),
+      };
+
+      setMessages(prev => prev.map(msg => 
+        msg.id === messageId ? regeneratedResponse : msg
+      ));
+      
+      toast({
+        title: "Content regenerated",
+        description: "New response generated successfully!",
+      });
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -227,15 +316,62 @@ What strategies has your organization implemented for remote productivity?`;
                 className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[90%] md:max-w-[80%] px-3 md:px-6 py-2 md:py-4 rounded-2xl ${
-                    message.isUser
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-700 text-gray-100'
-                  }`}
+                  className={`max-w-[90%] md:max-w-[80%] ${message.isUser ? '' : 'group'}`}
                 >
-                  <div className="whitespace-pre-wrap leading-relaxed text-xs md:text-sm">
-                    {message.content}
+                  <div
+                    className={`px-3 md:px-6 py-2 md:py-4 rounded-2xl ${
+                      message.isUser
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-700 text-gray-100'
+                    }`}
+                  >
+                    <div className="whitespace-pre-wrap leading-relaxed text-xs md:text-sm">
+                      {message.content}
+                    </div>
                   </div>
+                  
+                  {/* Action buttons for AI messages */}
+                  {!message.isUser && (
+                    <div className="flex items-center space-x-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleCopy(message.content)}
+                        className="h-8 w-8 p-0 text-gray-400 hover:text-white hover:bg-gray-600"
+                      >
+                        <Copy className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleLike(message.id)}
+                        className={`h-8 w-8 p-0 hover:bg-gray-600 ${
+                          message.liked ? 'text-green-500' : 'text-gray-400 hover:text-white'
+                        }`}
+                      >
+                        <ThumbsUp className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDislike(message.id)}
+                        className={`h-8 w-8 p-0 hover:bg-gray-600 ${
+                          message.disliked ? 'text-red-500' : 'text-gray-400 hover:text-white'
+                        }`}
+                      >
+                        <ThumbsDown className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleRegenerate(message.id)}
+                        disabled={isGenerating}
+                        className="h-8 w-8 p-0 text-gray-400 hover:text-white hover:bg-gray-600 disabled:opacity-50"
+                      >
+                        <RefreshCw className={`w-4 h-4 ${isGenerating ? 'animate-spin' : ''}`} />
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
