@@ -97,7 +97,7 @@ What strategies has your organization implemented for remote productivity?`;
   };
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col min-h-0">
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto px-6 py-8">
         {messages.length === 0 ? (
@@ -191,8 +191,8 @@ What strategies has your organization implemented for remote productivity?`;
         )}
       </div>
 
-      {/* Input Area */}
-      <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700 p-6">
+      {/* Sticky Input Area */}
+      <div className="sticky bottom-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700 p-6">
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
           <div className="relative">
             <Textarea
