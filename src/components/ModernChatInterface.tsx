@@ -244,8 +244,8 @@ What strategies has your organization implemented for remote productivity?`;
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="flex-1 overflow-y-auto pb-48 md:pb-56">
+      {/* Main Content Area with proper bottom padding */}
+      <div className="flex-1 overflow-y-auto pb-64 md:pb-72">
         {messages.length === 0 ? (
           <div className="text-center py-8 md:py-20 max-w-3xl mx-auto px-4 md:px-6">
             <h1 className="text-2xl md:text-4xl font-light text-white mb-6 md:mb-12">
