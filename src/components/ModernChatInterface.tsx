@@ -401,11 +401,11 @@ What strategies has your organization implemented for remote productivity?`;
         )}
       </div>
 
-      {/* Enhanced Sticky Input Area - Responsive to sidebar state */}
+      {/* Enhanced Sticky Input Area - Responsive to sidebar state with reduced width */}
       <div className={`fixed bottom-0 right-0 p-4 md:p-6 z-10 transition-all duration-200 ${
         state === 'expanded' ? 'left-0 md:left-64' : 'left-0 md:left-12'
       }`}>
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           {/* Add prompt usage display */}
           <PromptUsageDisplay
             userPlan={userPlan}
