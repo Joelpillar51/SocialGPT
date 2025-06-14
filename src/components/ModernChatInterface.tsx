@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
 import { Send, Activity, Twitter, Users, AlertTriangle, Crown, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -105,6 +106,10 @@ What strategies has your organization implemented for remote productivity?`;
               <span className="hidden sm:inline">Upgrade to Pro</span>
               <span className="sm:hidden">Pro</span>
             </Button>
+            <Avatar className="h-8 w-8 md:h-10 md:w-10">
+              <AvatarImage src="/placeholder.svg" alt="User" />
+              <AvatarFallback>U</AvatarFallback>
+            </Avatar>
           </div>
         </div>
       </div>
