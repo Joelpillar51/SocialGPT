@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -90,7 +89,7 @@ What strategies has your organization implemented for remote productivity?`;
       {/* Upgrade Button at the top */}
       <div className="p-4 border-b border-gray-700">
         <div className="max-w-3xl mx-auto flex justify-end">
-          <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6">
+          <Button className="bg-blue-500 hover:bg-blue-600 text-white px-6">
             <Crown className="w-4 h-4 mr-2" />
             Upgrade to Pro
           </Button>
