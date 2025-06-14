@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Send, Activity, Zap, AlertTriangle } from 'lucide-react';
+import { Send, Activity, Twitter, Users, AlertTriangle } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -51,7 +51,7 @@ export const ModernChatInterface = () => {
   const generateMockResponse = (input: string) => {
     return `Here's engaging content based on your request: "${input}"
 
-🧵 **Twitter Thread Strategy**
+🧵 **X (Twitter) Thread Strategy**
 
 1/ The future of remote work isn't just about location flexibility - it's about redefining productivity entirely.
 
@@ -88,11 +88,11 @@ What strategies has your organization implemented for remote productivity?`;
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-gray-800">
       {/* Main Content Area */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto pb-32">
         {messages.length === 0 ? (
           <div className="text-center py-20 max-w-3xl mx-auto px-6">
             <h1 className="text-4xl font-light text-white mb-12">
-              ChatGPT
+              SocialGPT
             </h1>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
@@ -103,31 +103,31 @@ What strategies has your organization implemented for remote productivity?`;
                 <h3 className="text-lg font-medium text-white mb-2">Examples</h3>
                 <div className="space-y-3">
                   <div className="bg-gray-700 hover:bg-gray-600 rounded-lg p-3 text-sm text-gray-300 cursor-pointer transition-colors">
-                    "Explain quantum computing in simple terms"
+                    "Create a thread about AI productivity tools for developers"
                   </div>
                   <div className="bg-gray-700 hover:bg-gray-600 rounded-lg p-3 text-sm text-gray-300 cursor-pointer transition-colors">
-                    "Got any creative ideas for a 10 year old's birthday?"
+                    "LinkedIn post about remote work trends in 2024"
                   </div>
                   <div className="bg-gray-700 hover:bg-gray-600 rounded-lg p-3 text-sm text-gray-300 cursor-pointer transition-colors">
-                    "How do I make an HTTP request in Javascript?"
+                    "Engaging X thread about startup fundraising tips"
                   </div>
                 </div>
               </div>
 
               <div className="text-center">
                 <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Zap className="w-6 h-6 text-white" />
+                  <Twitter className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-lg font-medium text-white mb-2">Capabilities</h3>
                 <div className="space-y-3">
                   <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
-                    Remembers what user said earlier in the conversation
+                    Creates platform-optimized content for X and LinkedIn
                   </div>
                   <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
-                    Allows user to provide follow-up corrections
+                    Generates engaging threads with proper character limits
                   </div>
                   <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
-                    Trained to decline inappropriate requests
+                    Tailors tone and style for professional or casual audiences
                   </div>
                 </div>
               </div>
@@ -139,13 +139,13 @@ What strategies has your organization implemented for remote productivity?`;
                 <h3 className="text-lg font-medium text-white mb-2">Limitations</h3>
                 <div className="space-y-3">
                   <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
-                    May occasionally generate incorrect information
+                    Content should be reviewed for brand voice and compliance
                   </div>
                   <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
-                    May occasionally produce harmful instructions or biased content
+                    May need adjustment for specific industry terminology
                   </div>
                   <div className="bg-gray-700 rounded-lg p-3 text-sm text-gray-300">
-                    Limited knowledge of world and events after 2021
+                    Always verify facts and statistics before posting
                   </div>
                 </div>
               </div>
@@ -180,7 +180,7 @@ What strategies has your organization implemented for remote productivity?`;
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
-                    <span className="text-gray-400 text-sm">Thinking...</span>
+                    <span className="text-gray-400 text-sm">Generating content...</span>
                   </div>
                 </div>
               </div>
@@ -189,15 +189,15 @@ What strategies has your organization implemented for remote productivity?`;
         )}
       </div>
 
-      {/* Input Area */}
-      <div className="border-t border-gray-700 bg-gray-800 p-6">
+      {/* Sticky Input Area */}
+      <div className="fixed bottom-0 left-0 right-0 border-t border-gray-700 bg-gray-800 p-6 z-10">
         <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
           <div className="relative">
             <Textarea
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Send a message"
+              placeholder="Describe your content idea (e.g., 'LinkedIn post about AI in healthcare' or 'X thread about startup lessons')"
               className="min-h-[50px] max-h-[200px] resize-none pr-12 bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-gray-500 focus:ring-gray-500 rounded-xl"
               disabled={isGenerating}
             />
