@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { SidebarTrigger } from '@/components/ui/sidebar';
+import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
 import { Send, Activity, Twitter, Users, AlertTriangle, Crown } from 'lucide-react';
 
 interface Message {
@@ -16,6 +15,7 @@ export const ModernChatInterface = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const { state } = useSidebar();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -202,8 +202,10 @@ What strategies has your organization implemented for remote productivity?`;
         )}
       </div>
 
-      {/* Sticky Input Area - Mobile responsive */}
-      <div className="fixed bottom-0 left-0 right-0 p-3 md:p-4 z-10">
+      {/* Sticky Input Area - Responsive to sidebar state */}
+      <div className={`fixed bottom-0 right-0 p-3 md:p-4 z-10 transition-all duration-200 ${
+        state === 'expanded' ? 'left-0 md:left-64' : 'left-0 md:left-12'
+      }`}>
         <div className="max-w-3xl mx-auto">
           <form onSubmit={handleSubmit}>
             <div className="relative flex items-end bg-gray-700 rounded-2xl border border-gray-600 p-2 md:p-3">
