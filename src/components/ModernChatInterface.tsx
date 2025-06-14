@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -101,7 +102,7 @@ What strategies has your organization implemented for remote productivity?`;
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 overflow-y-auto pb-32 md:pb-40">
+      <div className="flex-1 overflow-y-auto pb-48 md:pb-56">
         {messages.length === 0 ? (
           <div className="text-center py-8 md:py-20 max-w-3xl mx-auto px-4 md:px-6">
             <h1 className="text-2xl md:text-4xl font-light text-white mb-6 md:mb-12">
@@ -202,28 +203,28 @@ What strategies has your organization implemented for remote productivity?`;
         )}
       </div>
 
-      {/* Sticky Input Area - Responsive to sidebar state */}
-      <div className={`fixed bottom-0 right-0 p-3 md:p-4 z-10 transition-all duration-200 ${
+      {/* Enhanced Sticky Input Area - Responsive to sidebar state */}
+      <div className={`fixed bottom-0 right-0 p-4 md:p-6 z-10 transition-all duration-200 ${
         state === 'expanded' ? 'left-0 md:left-64' : 'left-0 md:left-12'
       }`}>
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <form onSubmit={handleSubmit}>
-            <div className="relative flex items-end bg-gray-700 rounded-2xl border border-gray-600 p-2 md:p-3">
+            <div className="relative flex items-end bg-gray-700 rounded-3xl border border-gray-600 shadow-2xl backdrop-blur-sm p-4 md:p-5">
               <Textarea
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Describe your content idea (e.g., 'LinkedIn post about AI in healthcare' or 'X thread about startup lessons')"
-                className="flex-1 min-h-[24px] max-h-[100px] md:max-h-[120px] resize-none border-0 bg-transparent text-white placeholder-gray-400 focus:ring-0 focus:outline-none p-0 text-sm md:text-base leading-6"
+                className="flex-1 min-h-[60px] md:min-h-[80px] max-h-[120px] md:max-h-[160px] resize-none border-0 bg-transparent text-white placeholder-gray-400 focus:ring-0 focus:outline-none p-0 text-base md:text-lg leading-relaxed"
                 disabled={isGenerating}
-                rows={1}
+                rows={2}
               />
               <Button
                 type="submit"
                 disabled={!inputValue.trim() || isGenerating}
-                className="ml-2 md:ml-3 h-8 w-8 p-0 bg-gray-600 hover:bg-gray-500 rounded-lg flex-shrink-0"
+                className="ml-4 h-12 w-12 md:h-14 md:w-14 p-0 bg-blue-600 hover:bg-blue-500 rounded-2xl flex-shrink-0 shadow-lg transition-all duration-200 hover:scale-105"
               >
-                <Send className="w-4 h-4" />
+                <Send className="w-5 h-5 md:w-6 md:h-6" />
               </Button>
             </div>
           </form>
