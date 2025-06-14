@@ -8,9 +8,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import { Plus, MessageSquare, Search, Users } from 'lucide-react';
+import { Plus, MessageSquare, Search, Users, Crown } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface ChatHistory {
@@ -50,16 +51,19 @@ export const ModernSidebar = () => {
   const categories = ['Today', 'Yesterday', 'Previous 7 days', 'Previous 30 days'];
 
   return (
-    <Sidebar className="border-none bg-gray-900 text-white h-screen" side="left" variant="sidebar" collapsible="none">
+    <Sidebar className="border-none bg-gray-900 text-white h-screen" side="left" variant="sidebar" collapsible="offcanvas">
       <SidebarHeader className="p-4 flex-shrink-0">
-        <div className="flex items-center space-x-3 mb-4">
-          <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-            <Users className="w-5 h-5 text-white" />
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+              <Users className="w-5 h-5 text-white" />
+            </div>
+            <span className="text-lg font-medium text-white group-data-[collapsible=icon]:hidden">SocialGPT</span>
           </div>
-          <span className="text-lg font-medium text-white">SocialGPT</span>
+          <SidebarTrigger className="text-white hover:bg-gray-800 md:hidden" />
         </div>
         
-        <div className="relative mb-4">
+        <div className="relative mb-4 group-data-[collapsible=icon]:hidden">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
             type="text"
@@ -68,7 +72,7 @@ export const ModernSidebar = () => {
           />
         </div>
 
-        <Button className="w-full bg-transparent border border-gray-600 hover:bg-gray-800 text-white text-sm py-2 px-3 rounded-lg flex items-center justify-center space-x-2">
+        <Button className="w-full bg-transparent border border-gray-600 hover:bg-gray-800 text-white text-sm py-2 px-3 rounded-lg flex items-center justify-center space-x-2 group-data-[collapsible=icon]:hidden">
           <Plus className="w-4 h-4" />
           <span>New Content</span>
         </Button>
@@ -81,7 +85,7 @@ export const ModernSidebar = () => {
               <div key={category} className="mb-4">
                 {groupedChats[category] && (
                   <>
-                    <h3 className="px-3 py-2 text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    <h3 className="px-3 py-2 text-xs font-medium text-gray-400 uppercase tracking-wider group-data-[collapsible=icon]:hidden">
                       {category}
                     </h3>
                     {groupedChats[category].map((chat) => (
@@ -89,7 +93,7 @@ export const ModernSidebar = () => {
                         <SidebarMenuButton className="w-full p-3 text-left hover:bg-gray-800 rounded-lg text-sm text-gray-300 hover:text-white transition-colors group">
                           <div className="flex items-center space-x-3 w-full">
                             <MessageSquare className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                            <span className="truncate">{chat.title}</span>
+                            <span className="truncate group-data-[collapsible=icon]:hidden">{chat.title}</span>
                           </div>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -103,10 +107,10 @@ export const ModernSidebar = () => {
       </SidebarContent>
 
       <SidebarFooter className="p-4 flex-shrink-0">
-        <div className="flex items-center space-x-3 text-gray-400">
+        <div className="flex items-center space-x-3 text-gray-400 group-data-[collapsible=icon]:justify-center">
           <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
-          <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
-          <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
+          <div className="w-6 h-6 bg-gray-600 rounded-full group-data-[collapsible=icon]:hidden"></div>
+          <div className="w-6 h-6 bg-gray-600 rounded-full group-data-[collapsible=icon]:hidden"></div>
         </div>
       </SidebarFooter>
     </Sidebar>
