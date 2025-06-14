@@ -97,7 +97,7 @@ What strategies has your organization implemented for remote productivity?`;
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 overflow-y-auto pb-32">
+      <div className="flex-1 overflow-y-auto pb-40">
         {messages.length === 0 ? (
           <div className="text-center py-20 max-w-3xl mx-auto px-6">
             <h1 className="text-4xl font-light text-white mb-12">
@@ -198,27 +198,30 @@ What strategies has your organization implemented for remote productivity?`;
         )}
       </div>
 
-      {/* Sticky Input Area - Removed background */}
-      <div className="fixed bottom-0 left-0 right-0 p-6 z-10">
-        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
-          <div className="relative">
-            <Textarea
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Describe your content idea (e.g., 'LinkedIn post about AI in healthcare' or 'X thread about startup lessons')"
-              className="min-h-[50px] max-h-[200px] resize-none pr-12 bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-gray-500 focus:ring-gray-500 rounded-xl"
-              disabled={isGenerating}
-            />
-            <Button
-              type="submit"
-              disabled={!inputValue.trim() || isGenerating}
-              className="absolute bottom-2 right-2 h-8 w-8 p-0 bg-gray-600 hover:bg-gray-500 rounded-lg"
-            >
-              <Send className="w-4 h-4" />
-            </Button>
-          </div>
-        </form>
+      {/* Sticky Input Area - Better aligned */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 z-10">
+        <div className="max-w-3xl mx-auto">
+          <form onSubmit={handleSubmit}>
+            <div className="relative flex items-end bg-gray-700 rounded-2xl border border-gray-600 p-3">
+              <Textarea
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Describe your content idea (e.g., 'LinkedIn post about AI in healthcare' or 'X thread about startup lessons')"
+                className="flex-1 min-h-[24px] max-h-[120px] resize-none border-0 bg-transparent text-white placeholder-gray-400 focus:ring-0 focus:outline-none p-0 text-base leading-6"
+                disabled={isGenerating}
+                rows={1}
+              />
+              <Button
+                type="submit"
+                disabled={!inputValue.trim() || isGenerating}
+                className="ml-3 h-8 w-8 p-0 bg-gray-600 hover:bg-gray-500 rounded-lg flex-shrink-0"
+              >
+                <Send className="w-4 h-4" />
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
