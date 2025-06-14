@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
   Sidebar,
@@ -68,7 +69,7 @@ export const ModernSidebar = () => {
           </div>
           <SidebarTrigger />
         </div>
-        <Button className="w-full mt-4 bg-transparent text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white hover:border-transparent shadow-lg hover:shadow-xl transition-all duration-200">
+        <Button className="w-full mt-4 bg-transparent text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-200">
           <Plus className="w-4 h-4 mr-2" />
           New Chat
         </Button>
