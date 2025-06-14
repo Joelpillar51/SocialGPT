@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
   Sidebar,
@@ -50,7 +51,7 @@ export const ModernSidebar = () => {
   const categories = ['Today', 'Yesterday', 'Previous 7 days', 'Previous 30 days'];
 
   return (
-    <Sidebar className="border-none bg-gray-900 text-white h-screen" side="left" variant="sidebar" collapsible="icon">
+    <Sidebar className="border-none bg-gray-950 text-white h-screen" side="left" variant="sidebar" collapsible="icon">
       <SidebarHeader className="p-3 md:p-4 flex-shrink-0">
         <div className="flex items-center justify-between mb-3 md:mb-4">
           <div className="flex items-center space-x-2 md:space-x-3">
@@ -66,11 +67,11 @@ export const ModernSidebar = () => {
           <input
             type="text"
             placeholder="Search conversations"
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-10 pr-4 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-gray-600"
+            className="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-gray-600"
           />
         </div>
 
-        <Button className="w-full bg-transparent border border-gray-600 hover:bg-gray-800 text-white text-sm py-2 px-3 rounded-lg flex items-center justify-center space-x-2 group-data-[collapsible=icon]:hidden">
+        <Button className="w-full bg-transparent border border-gray-600 hover:bg-gray-900 text-white text-sm py-2 px-3 rounded-lg flex items-center justify-center space-x-2 group-data-[collapsible=icon]:hidden">
           <Plus className="w-4 h-4" />
           <span>New Content</span>
         </Button>
@@ -88,7 +89,7 @@ export const ModernSidebar = () => {
                     </h3>
                     {groupedChats[category].map((chat) => (
                       <SidebarMenuItem key={chat.id}>
-                        <SidebarMenuButton className="w-full p-2 md:p-3 text-left hover:bg-gray-800 rounded-lg text-xs md:text-sm text-gray-300 hover:text-white transition-colors group">
+                        <SidebarMenuButton className="w-full p-2 md:p-3 text-left hover:bg-gray-900 rounded-lg text-xs md:text-sm text-gray-300 hover:text-white transition-colors group">
                           <div className="flex items-center space-x-2 md:space-x-3 w-full">
                             <MessageSquare className="w-3 h-3 md:w-4 md:h-4 text-gray-400 flex-shrink-0" />
                             <span className="truncate group-data-[collapsible=icon]:hidden">{chat.title}</span>
