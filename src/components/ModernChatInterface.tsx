@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
-import { Send, Activity, Twitter, Users, AlertTriangle, Crown } from 'lucide-react';
+import { Send, Activity, Twitter, Users, AlertTriangle, Crown, BookOpen } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface Message {
   id: string;
@@ -93,11 +93,19 @@ What strategies has your organization implemented for remote productivity?`;
       <div className="p-3 md:p-4 border-b border-gray-700">
         <div className="flex justify-between items-center w-full">
           <SidebarTrigger className="text-white hover:bg-gray-700 h-8 w-8 md:h-10 md:w-10" />
-          <Button className="ml-auto bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 md:px-6 text-sm">
-            <Crown className="w-4 h-4 mr-1 md:mr-2" />
-            <span className="hidden sm:inline">Upgrade to Pro</span>
-            <span className="sm:hidden">Pro</span>
-          </Button>
+          <div className="flex items-center space-x-2 ml-auto">
+            <Link to="/docs">
+              <Button variant="ghost" className="text-white hover:bg-gray-700 px-3 py-2 text-sm">
+                <BookOpen className="w-4 h-4 mr-1 md:mr-2" />
+                <span className="hidden sm:inline">Docs</span>
+              </Button>
+            </Link>
+            <Button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 md:px-6 text-sm">
+              <Crown className="w-4 h-4 mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Upgrade to Pro</span>
+              <span className="sm:hidden">Pro</span>
+            </Button>
+          </div>
         </div>
       </div>
 
