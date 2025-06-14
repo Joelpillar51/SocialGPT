@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Sidebar,
@@ -64,12 +63,12 @@ export const ModernSidebar = () => {
               <span className="text-white font-bold text-sm">X</span>
             </div>
             <span className="font-bold text-lg bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              GetXPilot
+              XPilot
             </span>
           </div>
           <SidebarTrigger />
         </div>
-        <Button className="w-full mt-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200">
+        <Button className="w-full mt-4 bg-transparent text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white hover:border-transparent shadow-lg hover:shadow-xl transition-all duration-200">
           <Plus className="w-4 h-4 mr-2" />
           New Chat
         </Button>

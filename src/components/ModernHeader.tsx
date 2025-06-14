@@ -36,7 +36,7 @@ export const ModernHeader = () => {
             <Button variant="ghost" size="sm" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
               Clear Chat
             </Button>
-            <Button size="sm" className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200">
+            <Button size="sm" className="bg-transparent text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white hover:border-transparent shadow-lg hover:shadow-xl transition-all duration-200">
               <Sparkles className="w-4 h-4 mr-2" />
               Upgrade Pro
             </Button>
